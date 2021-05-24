@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Constants/Constants.dart';
+import 'Screens/OnBoarding/Mandatory KYC.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,6 +76,7 @@ class _MyAppState extends State<MyApp> {
               accentColor: primaryColor,
               backgroundColor: primaryColor,
             ),
-            home: home);
+            //home: home
+            home: MandatoryKYC());
   }
 }

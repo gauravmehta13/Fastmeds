@@ -1,4 +1,5 @@
 import 'package:fastmeds/Constants/Constants.dart';
+import 'package:fastmeds/models/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -17,7 +18,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    this.checkAuthentification();
+    // this.checkAuthentification();
   }
 
   @override
@@ -107,7 +108,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      await _auth.signInWithCredential(credential).then((value) async {
+        if (value.additionalUserInfo!.isNewUser == false) {
+          print("object");
+          await DatabaseService(uid: _auth.currentUser!.uid)
+              .updateUserData(["meds"], "shopdddName", "gstNo", "adddddress");
+        }
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      });
     }
   }
 
