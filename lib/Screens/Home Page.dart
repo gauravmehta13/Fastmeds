@@ -5,7 +5,6 @@ import 'package:fastmeds/Widgets/Loading.dart';
 import 'package:fastmeds/components/category_card.dart';
 import 'package:fastmeds/components/doctor_card.dart';
 import 'package:fastmeds/components/search_bar.dart';
-import 'package:fastmeds/models/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
