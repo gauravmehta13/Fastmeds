@@ -3,8 +3,11 @@ import 'package:fastmeds/Screens/Drawer.dart';
 import 'package:fastmeds/components/category_card.dart';
 import 'package:fastmeds/components/doctor_card.dart';
 import 'package:fastmeds/components/search_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              box10,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -35,12 +37,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         _drawerKey.currentState!.openDrawer();
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(left: 30),
+                        padding: EdgeInsets.fromLTRB(30, 10, 10, 10),
                         child: SvgPicture.asset('assets/icons/menu.svg'),
                       )),
                   Padding(
-                    padding: EdgeInsets.only(right: 30),
-                    child: SvgPicture.asset('assets/icons/profile.svg'),
+                    padding: EdgeInsets.fromLTRB(10, 10, 30, 10),
+                    child: CircleAvatar(
+                        backgroundColor: Colors.grey[300],
+                        backgroundImage:
+                            NetworkImage(_auth.currentUser!.photoURL ?? "")),
                   ),
                 ],
               ),

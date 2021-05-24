@@ -1,5 +1,6 @@
 import 'package:fastmeds/Constants/Constants.dart';
 import 'package:fastmeds/Screens/home_screen.dart';
+import 'package:fastmeds/Screens/onboarding_screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   void initState() {
-    FirebaseAnalytics().logEvent(name: 'App_Drawer', parameters: null);
+    //  FirebaseAnalytics().logEvent(name: 'App_Drawer', parameters: null);
     super.initState();
   }
 
@@ -36,13 +37,18 @@ class _MyDrawerState extends State<MyDrawer> {
                 width: double.maxFinite,
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(color: Color(0xFF3f51b5)),
-                child: _auth.currentUser?.phoneNumber != null
-                    ? Text((_auth.currentUser?.phoneNumber ?? ""),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: Colors.white,
-                        ))
+                child: _auth.currentUser != null
+                    ? Row(
+                        children: [
+                          if (_auth.currentUser != null)
+                            Text((_auth.currentUser!.displayName ?? ""),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                )),
+                        ],
+                      )
                     : Text("FastMeds",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -79,6 +85,22 @@ class _MyDrawerState extends State<MyDrawer> {
                   size: 18,
                 ),
               ),
+              if (_auth.currentUser != null)
+                ListTile(
+                  dense: true,
+                  onTap: () async {
+                    _auth.signOut().then((_) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (_) => OnboardingScreen()));
+                    });
+                  },
+                  title: Text("SignOut"),
+                  leading: FaIcon(
+                    FontAwesomeIcons.signOutAlt,
+                    color: Colors.black87,
+                    size: 18,
+                  ),
+                ),
               Container(
                 color: primaryColor,
                 width: double.maxFinite,
@@ -100,16 +122,11 @@ class _MyDrawerState extends State<MyDrawer> {
       ),
     );
   }
-
-  signOut() {
-    _auth.signOut().then((value) => Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => HomeScreen())));
-  }
 }
 
 _sendMail() async {
   // Android and iOS
-  const uri = 'mailto:goflexe@gmail.com';
+  const uri = 'mailto:fastmeds@gmail.com';
   if (await canLaunch(uri)) {
     await launch(uri);
   } else {

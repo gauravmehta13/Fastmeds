@@ -67,27 +67,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       height: 20,
                     ),
                     MaterialButton(
+                      elevation: 10,
+                      height: 45,
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HomeScreen(),
-                          ),
-                        );
+                        googleLogin();
                       },
-                      color: kOrangeColor,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 30,
-                      ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        'Get Started',
-                        style: TextStyle(
-                          color: kWhiteColor,
-                          fontSize: 16,
-                        ),
+                          borderRadius: BorderRadius.circular(30),
+                          side: BorderSide(color: Color(0xff3b5998))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset('assets/google.png', scale: 3),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            'Get Started',
+                            style: TextStyle(color: Color(0xff3b5998)),
+                          )
+                        ],
                       ),
                     ),
                   ],
