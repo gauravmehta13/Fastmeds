@@ -37,7 +37,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height / 6,
+              top: MediaQuery.of(context).size.height / 7,
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width / 8,
@@ -46,27 +46,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
+                      'FastMeds',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 50,
+                        color: kTitleTextColor,
+                      ),
+                    ),
+                    box20,
+                    Text(
                       'Prebook The Meds\nYou Want',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 32,
-                        color: kTitleTextColor,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Lorem ipsum dolor amet, consectetur\nadipiscing inet deli',
-                      style: TextStyle(
-                        fontSize: 16,
                         color: kTitleTextColor.withOpacity(0.7),
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    box20,
                     MaterialButton(
+                      color: Colors.white,
                       elevation: 10,
                       height: 45,
                       onPressed: () {
