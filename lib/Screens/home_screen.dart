@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   InkWell(
                       onTap: () {
-                        print("object");
                         _drawerKey.currentState!.openDrawer();
                       },
                       child: Padding(
@@ -54,13 +53,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Text(
-                  'Find Your Desired\nMeds',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 32,
-                    color: kTitleTextColor,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Hello ${_auth.currentUser!.displayName}",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: kTitleTextColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    box10,
+                    Text(
+                      'Find Your Desired\nMeds',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                        color: kTitleTextColor.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
