@@ -99,7 +99,7 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
           ),
         ),
         // drawer: MyDrawer(),
-        appBar: AppBar(),
+
         body: loading == true
             ? Container(
                 height: MediaQuery.of(context).size.height,
@@ -108,119 +108,60 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
                   child: CircularProgressIndicator(),
                 ),
               )
-            : SingleChildScrollView(
-                child: kycCompleted == true
-                    ? Container()
-                    : Form(
-                        key: formKey,
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              SizedBox(
-                                  height: 80,
-                                  child: Image.asset("assets/kyc.png")),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Verify Your Identity   ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 20),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                  width: double.maxFinite,
-                                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFc1f0dc),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "85% customers prefer to select a Shopkeeper with a complete profile.",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Color(0xFF2f7769),
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  )),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              new TextFormField(
-                                controller: companyName,
-                                decoration: new InputDecoration(
-                                    prefixIcon:
-                                        Icon(FontAwesomeIcons.addressCard),
-                                    isDense: true, // Added this
-                                    contentPadding: EdgeInsets.all(15),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(4)),
-                                      borderSide: BorderSide(
-                                        width: 1,
-                                        color: Color(0xFF2821B5),
-                                      ),
-                                    ),
-                                    border: new OutlineInputBorder(
-                                        borderSide: new BorderSide(
-                                            color: Colors.grey[200]!)),
-                                    labelText: "Pharmacy Name*"),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Required';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              new TextFormField(
-                                controller: area,
-                                onChanged: (value) {},
-                                decoration: new InputDecoration(
-                                    prefixIcon: Icon(Icons.gps_fixed),
-                                    isDense: true, // Added this
-                                    contentPadding: EdgeInsets.all(15),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(4)),
-                                      borderSide: BorderSide(
-                                        width: 1,
-                                        color: Color(0xFF2821B5),
-                                      ),
-                                    ),
-                                    border: new OutlineInputBorder(
-                                        borderSide: new BorderSide(
-                                            color: Colors.grey[200]!)),
-                                    labelText: "Select City*"),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Required';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              Column(
+            : SafeArea(
+                child: SingleChildScrollView(
+                    child: kycCompleted == true
+                        ? Container()
+                        : Form(
+                            key: formKey,
+                            child: Container(
+                              padding: EdgeInsets.all(20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  box10,
                                   SizedBox(
-                                    height: 20,
+                                      height: 80,
+                                      child: Image.asset("assets/kyc.png")),
+                                  box10,
+                                  Text(
+                                    "Verify Your Identity   ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 20),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                      width: double.maxFinite,
+                                      padding:
+                                          EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFc1f0dc),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "85% customers prefer to select a Shopkeeper with a complete profile.",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Color(0xFF2f7769),
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      )),
+                                  SizedBox(
+                                    height: 30,
                                   ),
                                   new TextFormField(
-                                    controller: streetAddress,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    controller: companyName,
                                     decoration: new InputDecoration(
-                                        isDense: true, // Added this
                                         prefixIcon:
-                                            Icon(FontAwesomeIcons.building),
+                                            Icon(FontAwesomeIcons.addressCard),
+                                        isDense: true, // Added this
                                         contentPadding: EdgeInsets.all(15),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
@@ -233,7 +174,7 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
                                         border: new OutlineInputBorder(
                                             borderSide: new BorderSide(
                                                 color: Colors.grey[200]!)),
-                                        labelText: "Street Address*"),
+                                        labelText: "Pharmacy Name*"),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Required';
@@ -245,10 +186,13 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
                                     height: 20,
                                   ),
                                   new TextFormField(
-                                    controller: gstNo,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    controller: area,
+                                    onChanged: (value) {},
                                     decoration: new InputDecoration(
+                                        prefixIcon: Icon(Icons.gps_fixed),
                                         isDense: true, // Added this
-                                        prefixIcon: Icon(FontAwesomeIcons.pen),
                                         contentPadding: EdgeInsets.all(15),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
@@ -261,35 +205,103 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
                                         border: new OutlineInputBorder(
                                             borderSide: new BorderSide(
                                                 color: Colors.grey[200]!)),
-                                        labelText: "GST Number (Optional)"),
+                                        labelText: "Select City*"),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Required';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                  box20,
-                                  Row(
+                                  Column(
                                     children: [
-                                      Text(
-                                        "Shop Images :\n(Optional)",
-                                        style:
-                                            TextStyle(color: Colors.grey[700]),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      new TextFormField(
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        controller: streetAddress,
+                                        decoration: new InputDecoration(
+                                            isDense: true, // Added this
+                                            prefixIcon:
+                                                Icon(FontAwesomeIcons.building),
+                                            contentPadding: EdgeInsets.all(15),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(4)),
+                                              borderSide: BorderSide(
+                                                width: 1,
+                                                color: Color(0xFF2821B5),
+                                              ),
+                                            ),
+                                            border: new OutlineInputBorder(
+                                                borderSide: new BorderSide(
+                                                    color: Colors.grey[200]!)),
+                                            labelText: "Street Address*"),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Required';
+                                          }
+                                          return null;
+                                        },
                                       ),
                                       SizedBox(
-                                        width: 20,
+                                        height: 20,
                                       ),
-                                      RawMaterialButton(
-                                          onPressed: () {},
-                                          elevation: 0,
-                                          fillColor: Color(0xFFf9a825),
-                                          child: Icon(FontAwesomeIcons.upload),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)))
+                                      new TextFormField(
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        controller: gstNo,
+                                        decoration: new InputDecoration(
+                                            isDense: true, // Added this
+                                            prefixIcon:
+                                                Icon(FontAwesomeIcons.pen),
+                                            contentPadding: EdgeInsets.all(15),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(4)),
+                                              borderSide: BorderSide(
+                                                width: 1,
+                                                color: Color(0xFF2821B5),
+                                              ),
+                                            ),
+                                            border: new OutlineInputBorder(
+                                                borderSide: new BorderSide(
+                                                    color: Colors.grey[200]!)),
+                                            labelText: "GST Number (Optional)"),
+                                      ),
+                                      box20,
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Shop Images :\n(Optional)",
+                                            style: TextStyle(
+                                                color: Colors.grey[700]),
+                                          ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          RawMaterialButton(
+                                              onPressed: () {},
+                                              elevation: 0,
+                                              fillColor: Color(0xFFf9a825)
+                                                  .withOpacity(0.3),
+                                              child:
+                                                  Icon(FontAwesomeIcons.upload),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)))
+                                        ],
+                                      )
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
-                      )));
+                            ),
+                          )),
+              ));
   }
 
   // void _getUserLocation() async {
