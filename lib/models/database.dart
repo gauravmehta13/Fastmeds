@@ -2,16 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
   final String uid;
-  DatabaseService({required this.uid});
+  DatabaseService(this.uid);
   final CollectionReference userInfo =
-      FirebaseFirestore.instance.collection("userInfo");
+      FirebaseFirestore.instance.collection("pha");
 
-  Future updateUserData(
-      List meds, String shopName, String gstNo, String address) async {
+  Future updateUserData(String shopName, String gstNo, String address,
+      String city, String state, String phone) async {
     await userInfo.doc(uid).set({
       'shopName': shopName,
+      'phone': phone,
+      'city': city,
+      'state': state,
       'address': address,
-      'availableMeds': meds,
       "gstNo": gstNo,
     });
   }

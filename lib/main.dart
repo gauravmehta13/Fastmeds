@@ -1,4 +1,4 @@
-import 'package:fastmeds/Screens/home_screen.dart';
+import 'package:fastmeds/Screens/Home%20Page.dart';
 import 'package:fastmeds/Auth/onboarding_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -76,7 +76,8 @@ class _MyAppState extends State<MyApp> {
               accentColor: primaryColor,
               backgroundColor: primaryColor,
             ),
-            //home: home
-            home: MandatoryKYC());
+            home: home
+            // home: MandatoryKYC()
+            );
   }
 }

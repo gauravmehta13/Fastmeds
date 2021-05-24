@@ -1,16 +1,15 @@
-import 'dart:async';
-import 'dart:convert';
 import 'package:fastmeds/Constants/Constants.dart';
+import 'package:fastmeds/Constants/Districts.dart';
+import 'package:fastmeds/Screens/Home%20Page.dart';
+import 'package:fastmeds/models/database.dart';
 import 'package:flutter/services.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:convert' as convert;
 import '../../Fade Route.dart';
-import 'package:mime/mime.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -27,18 +26,14 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
   bool loading = false;
   bool sendingData = false;
   bool kycCompleted = false;
-  bool userDetails = true;
-  // Timer _pickupdebounce;
-  // List<PlaceSearch> pickupSearchResults;
+  String districtName = "";
+  String stateName = "";
+  List<StateDistrictMapping> districtMapping = [];
   final formKey = GlobalKey<FormState>();
-  var area = new TextEditingController();
   var companyName = new TextEditingController();
   var streetAddress = new TextEditingController();
   var gstNo = new TextEditingController();
-  var companyDescription = new TextEditingController();
-  var websiteLink = new TextEditingController();
-  var pointOfContactName = new TextEditingController();
-  var pointOfContactNumber = new TextEditingController();
+  var phone = new TextEditingController();
 
   // PlatformFile displayImage;
   // String displayImageLink;
@@ -47,10 +42,17 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
   // List<PlatformFile> otherImages = [];
   List<String> otherImagesLink = [];
   bool uploadingImages = false;
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    districtMapping = StateDistrictMapping.getDsitricts();
+  }
+
+  scrollToTop() {
+    scrollController.animateTo(scrollController.position.minScrollExtent,
+        duration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
   }
 
   @override
@@ -74,6 +76,21 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
                         setState(() {
                           sendingData = true;
                         });
+                        await DatabaseService(_auth.currentUser!.uid)
+                            .updateUserData(
+                                companyName.text,
+                                gstNo.text,
+                                streetAddress.text,
+                                districtName,
+                                stateName,
+                                phone.text);
+                        setState(() {
+                          sendingData = false;
+                        });
+                        Navigator.pushReplacement(
+                          context,
+                          FadeRoute(page: HomeScreen()),
+                        );
                       }
                     },
               child: sendingData == true || uploadingImages == true
@@ -92,14 +109,12 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
                       ],
                     )
                   : Text(
-                      "Next",
+                      "Save",
                       style: TextStyle(color: Colors.black),
                     ),
             ),
           ),
         ),
-        // drawer: MyDrawer(),
-
         body: loading == true
             ? Container(
                 height: MediaQuery.of(context).size.height,
@@ -110,6 +125,7 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
               )
             : SafeArea(
                 child: SingleChildScrollView(
+                    controller: scrollController,
                     child: kycCompleted == true
                         ? Container()
                         : Form(
@@ -174,7 +190,22 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
                                         border: new OutlineInputBorder(
                                             borderSide: new BorderSide(
                                                 color: Colors.grey[200]!)),
-                                        labelText: "Pharmacy Name*"),
+                                        labelText: "Pharmacy Name"),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Required';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  box20,
+                                  new TextFormField(
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    textInputAction: TextInputAction.next,
+                                    controller: phone,
+                                    decoration: textfieldDecoration(
+                                        "Contact Number", Icons.phone),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Required';
@@ -185,39 +216,100 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  new TextFormField(
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    controller: area,
-                                    onChanged: (value) {},
-                                    decoration: new InputDecoration(
-                                        prefixIcon: Icon(Icons.gps_fixed),
-                                        isDense: true, // Added this
-                                        contentPadding: EdgeInsets.all(15),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4)),
-                                          borderSide: BorderSide(
-                                            width: 1,
-                                            color: Color(0xFF2821B5),
+                                  Column(
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Autocomplete<StateDistrictMapping>(
+                                            displayStringForOption: (option) =>
+                                                option.district,
+                                            fieldViewBuilder: (context,
+                                                    textEditingController,
+                                                    focusNode,
+                                                    onFieldSubmitted) =>
+                                                TextFormField(
+                                                    autovalidateMode:
+                                                        AutovalidateMode
+                                                            .onUserInteraction,
+                                                    validator: (value) {
+                                                      if (value == null ||
+                                                          value.isEmpty) {
+                                                        return 'Required';
+                                                      }
+                                                      return null;
+                                                    },
+                                                    scrollPadding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 150.0),
+                                                    controller:
+                                                        textEditingController,
+                                                    onTap: () {
+                                                      textEditingController
+                                                          .clear();
+                                                      setState(() {
+                                                        stateName = "";
+                                                      });
+                                                    },
+                                                    focusNode: focusNode,
+                                                    decoration:
+                                                        textfieldDecoration(
+                                                            "Select City",
+                                                            FontAwesomeIcons
+                                                                .city)),
+                                            optionsBuilder: (textEditingValue) {
+                                              if (textEditingValue.text == '') {
+                                                return districtMapping;
+                                              }
+                                              return districtMapping.where((s) {
+                                                return s.district
+                                                    .toLowerCase()
+                                                    .contains(textEditingValue
+                                                        .text
+                                                        .toLowerCase());
+                                              });
+                                            },
+                                            onSelected: (StateDistrictMapping
+                                                selection) {
+                                              final FocusScopeNode
+                                                  currentScope =
+                                                  FocusScope.of(context);
+                                              if (!currentScope
+                                                      .hasPrimaryFocus &&
+                                                  currentScope.hasFocus) {
+                                                FocusManager
+                                                    .instance.primaryFocus!
+                                                    .unfocus();
+                                              }
+                                              print(selection.district);
+                                              print(selection.districtID);
+                                              setState(() {
+                                                districtName = selection
+                                                    .district
+                                                    .toString();
+                                                stateName =
+                                                    selection.state.toString();
+                                              });
+                                              scrollToTop();
+                                            },
                                           ),
-                                        ),
-                                        border: new OutlineInputBorder(
-                                            borderSide: new BorderSide(
-                                                color: Colors.grey[200]!)),
-                                        labelText: "Select City*"),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Required';
-                                      }
-                                      return null;
-                                    },
+                                          if (stateName.isNotEmpty)
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(top: 0),
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Text(
+                                                  stateName,
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                ))
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                   Column(
                                     children: [
-                                      SizedBox(
-                                        height: 20,
-                                      ),
+                                      box20,
                                       new TextFormField(
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
@@ -238,7 +330,7 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
                                             border: new OutlineInputBorder(
                                                 borderSide: new BorderSide(
                                                     color: Colors.grey[200]!)),
-                                            labelText: "Street Address*"),
+                                            labelText: "Street Address"),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
                                             return 'Required';
@@ -246,9 +338,7 @@ class _MandatoryKYCState extends State<MandatoryKYC> {
                                           return null;
                                         },
                                       ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
+                                      box20,
                                       new TextFormField(
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
