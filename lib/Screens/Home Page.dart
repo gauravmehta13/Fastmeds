@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return new StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection("userInfo")
+            .collection("Shops")
             .doc(_auth.currentUser!.uid) //ID OF DOCUMENT
             .snapshots(),
         builder: (context, snapshot) {
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return Loading();
           }
           dynamic document = snapshot.data;
-          print(document!["address"]);
+          print(document!["address"] ?? "");
           return Scaffold(
             key: _drawerKey,
             drawer: MyDrawer(),
