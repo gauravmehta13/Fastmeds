@@ -1,9 +1,9 @@
+import 'package:fastmeds/Screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Constants/Constants.dart';
-import 'Screens/HomePage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +46,6 @@ class MyApp extends StatelessWidget {
           //   buttonColor: primaryColor,
           // )
         ),
-        home: HomePage());
+        home: HomeScreen());
   }
 }
