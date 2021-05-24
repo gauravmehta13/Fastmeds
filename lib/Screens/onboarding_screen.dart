@@ -1,9 +1,25 @@
 import 'package:fastmeds/Constants/Constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'home_screen.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
+  @override
+  _OnboardingScreenState createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final googleSignIn = GoogleSignIn();
+
+  @override
+  void initState() {
+    super.initState();
+    this.checkAuthentification();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,5 +98,29 @@ class OnboardingScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future googleLogin() async {
+    final user = await googleSignIn.signIn();
+    if (user == null) {
+      return;
+    } else {
+      final googleAuth = await user.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    }
+  }
+
+  checkAuthentification() async {
+    _auth.authStateChanges().listen((user) {
+      if (user != null) {
+        print(user);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
+    });
   }
 }
