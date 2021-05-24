@@ -43,8 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.fromLTRB(10, 10, 30, 10),
                     child: CircleAvatar(
                         backgroundColor: Colors.grey[300],
-                        backgroundImage:
-                            NetworkImage(_auth.currentUser!.photoURL ?? "")),
+                        backgroundImage: NetworkImage(_auth
+                                .currentUser!.photoURL ??
+                            "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png")),
                   ),
                 ],
               ),
