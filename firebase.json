@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "fastmeds",
     "public": "build/web",
     "ignore": [
       "firebase.json",

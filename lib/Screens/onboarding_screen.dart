@@ -30,7 +30,7 @@ class OnboardingScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Choose The Doctor\nYou Want',
+                      'Prebook The Meds\nYou Want',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 32,
