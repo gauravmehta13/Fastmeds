@@ -7,8 +7,10 @@ class ShopDetails {
   late String state;
   late String city;
   late String phone;
+  late String uid;
 
   ShopDetails.fromMap(QueryDocumentSnapshot<Object?> data) {
+    // uid = data['uid'] ?? "";
     shopName = data['shopName'];
     gstNo = data['gstNo'];
     address = data['address'];

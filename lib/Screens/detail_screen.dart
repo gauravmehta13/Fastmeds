@@ -6,11 +6,12 @@ import 'HomePage/components/schedule_card.dart';
 
 // ignore: must_be_immutable
 class DetailScreen extends StatelessWidget {
-  var _name;
-  var _description;
-  var _imageUrl;
+  String name;
+  String address;
 
-  DetailScreen(this._name, this._description, this._imageUrl);
+  String imageUrl;
+
+  DetailScreen(this.name, this.address, this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +73,7 @@ class DetailScreen extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Image.asset(
-                            _imageUrl,
+                            imageUrl,
                             height: 120,
                           ),
                           SizedBox(
@@ -82,7 +83,7 @@ class DetailScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                _name,
+                                name,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -93,7 +94,7 @@ class DetailScreen extends StatelessWidget {
                                 height: 10,
                               ),
                               Text(
-                                _description,
+                                address,
                                 style: TextStyle(
                                   color: kTitleTextColor.withOpacity(0.7),
                                 ),

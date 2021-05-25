@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fastmeds/Constants/Constants.dart';
 import 'package:fastmeds/Screens/Drawer.dart';
@@ -21,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late List<ShopDetails> shopList = [];
   bool loading = true;
+  List colors = [kBlueColor, kYellowColor, kOrangeColor];
+  Random random = new Random();
 
   void initState() {
     super.initState();
@@ -39,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
         loading = false;
       });
     } catch (e) {
+      print(e);
       setState(() {
         loading = false;
       });
@@ -84,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Hello ${_auth.currentUser!.displayName}",
+                    "Hi, ${_auth.currentUser!.displayName!.split(" ")[0]}",
                     style: TextStyle(
                       fontSize: 18,
                       color: kTitleTextColor,
@@ -93,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   box10,
                   Text(
-                    'Find Your Desired\nMeds',
+                    'Find your\nmedical solution!',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 32,
@@ -162,25 +167,29 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           itemCount: shopList.length,
           itemBuilder: (BuildContext context, int i) => Container(
-                child: Card(
-                  child: Container(
-                    color: primaryColor.withOpacity(0.1),
-                    height: 150,
-                    width: 110,
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                            backgroundColor: Colors.grey[300],
-                            child: Image.asset("assets/pharmacy.png")),
-                        box5,
-                        Text(
-                          shopList[i].shopName,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        )
-                      ],
-                    ),
+                child: Container(
+                  margin: EdgeInsets.all(5),
+                  height: 150,
+                  width: 110,
+                  decoration: BoxDecoration(
+                    color: colors[random.nextInt(3)].withOpacity(0.1),
+                    borderRadius: BorderRadius.all(Radius.circular(
+                            5.0) //                 <--- border radius here
+                        ),
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                          backgroundColor: Colors.grey[300],
+                          child: Image.asset("assets/pharmacy.png")),
+                      box5,
+                      Text(
+                        shopList[i].shopName,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      )
+                    ],
                   ),
                 ),
               )),
@@ -189,40 +198,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   buildAllPharmacy() {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 30,
-      ),
-      child: Column(
-        children: <Widget>[
-          DoctorCard(
-            'Dr. Stella Kane',
-            'Heart Surgeon - Flower Hospitals',
-            'assets/pharmacy2.png',
-            kBlueColor,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          DoctorCard(
-            'Dr. Joseph Cart',
-            'Dental Surgeon - Flower Hospitals',
-            'assets/pharmacy2.png',
-            kYellowColor,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          DoctorCard(
-            'Dr. Stephanie',
-            'Eye Specialist - Flower Hospitals',
-            'assets/pharmacy2.png',
-            kOrangeColor,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-        ],
-      ),
-    );
+        padding: EdgeInsets.symmetric(
+          horizontal: 30,
+        ),
+        child: ListView.builder(
+            physics: BouncingScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: shopList.length,
+            itemBuilder: (BuildContext context, int i) => Container(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: DoctorCard(
+                      shopList[i].shopName,
+                      shopList[i].address,
+                      'assets/pharmacy2.png',
+                      colors[random.nextInt(3)],
+                    ),
+                  ),
+                )));
   }
 }

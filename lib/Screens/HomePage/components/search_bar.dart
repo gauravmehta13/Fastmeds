@@ -15,9 +15,15 @@ class SearchBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
           ),
           child: TextField(
-            decoration: InputDecoration(
-              hintText: 'Search for Meds',
-            ),
+            decoration: new InputDecoration(
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                contentPadding:
+                    EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                hintText: "Search for Meds"),
           ),
         ),
         Align(
@@ -27,12 +33,16 @@ class SearchBar extends StatelessWidget {
             color: kOrangeColor,
             padding: EdgeInsets.symmetric(
               horizontal: 10,
-              vertical: 15,
+              vertical: 13,
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),
-            child: SvgPicture.asset('assets/icons/search.svg'),
+            child: Icon(
+              Icons.search,
+              color: Colors.white,
+              size: 20,
+            ),
           ),
         ),
       ],

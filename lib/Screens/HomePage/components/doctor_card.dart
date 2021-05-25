@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 
 class DoctorCard extends StatelessWidget {
   var _name;
-  var _description;
+
   var _imageUrl;
   var _bgColor;
+  var _address;
 
-  DoctorCard(this._name, this._description, this._imageUrl, this._bgColor);
+  DoctorCard(this._name, this._address, this._imageUrl, this._bgColor);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,11 @@ class DoctorCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailScreen(_name, _description, _imageUrl),
+            builder: (context) => DetailScreen(
+              _name,
+              _address,
+              _imageUrl,
+            ),
           ),
         );
       },
@@ -38,7 +43,7 @@ class DoctorCard extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              _description,
+              _address,
               style: TextStyle(
                 color: kTitleTextColor.withOpacity(0.7),
               ),
