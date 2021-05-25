@@ -1,5 +1,5 @@
 import 'package:fastmeds/Constants/Constants.dart';
-import 'package:fastmeds/Screens/detail_screen.dart';
+import 'package:fastmeds/Screens/Pharmacy/Pharmacy%20Details.dart';
 import 'package:flutter/material.dart';
 
 class DoctorCard extends StatelessWidget {

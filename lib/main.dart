@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'Constants/Constants.dart';
-import 'Screens/HomePage/Home Page.dart';
+import 'Screens/HomePage/HomePage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +23,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool loading = kIsWeb ? true : false;
   late Widget home =
-      _auth.currentUser != null ? HomeScreen() : OnboardingScreen();
+      _auth.currentUser != null ? HomePage() : OnboardingScreen();
 
   void initState() {
     if (kIsWeb) {
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       subscription.onData((event) async {
         if (event != null) {
           setState(() {
-            home = HomeScreen();
+            home = HomePage();
           });
           subscription.cancel();
           setState(() {

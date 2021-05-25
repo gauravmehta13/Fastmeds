@@ -1,6 +1,5 @@
 import 'package:fastmeds/Constants/Constants.dart';
-import 'package:fastmeds/Screens/HomePage/Home%20Page.dart';
-import 'package:fastmeds/models/database.dart';
+import 'package:fastmeds/Screens/HomePage/HomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -113,7 +112,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           //     context, MaterialPageRoute(builder: (context) => MandatoryKYC()));
         }
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       });
     }
   }
@@ -123,7 +122,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       if (user != null) {
         print(user);
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     });
   }

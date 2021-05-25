@@ -1,8 +1,7 @@
 import 'package:fastmeds/Constants/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import 'HomePage/components/schedule_card.dart';
+import 'components/schedule_card.dart';
 
 // ignore: must_be_immutable
 class DetailScreen extends StatelessWidget {

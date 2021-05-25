@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fastmeds/Constants/Constants.dart';
 import 'package:fastmeds/Screens/Drawer.dart';
@@ -12,12 +11,12 @@ import 'components/search_bar.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-class HomeScreen extends StatefulWidget {
+class Pharmacy extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _PharmacyState createState() => _PharmacyState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _PharmacyState extends State<Pharmacy> {
   CollectionReference shops = FirebaseFirestore.instance.collection('Shops');
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 

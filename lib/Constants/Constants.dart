@@ -41,7 +41,7 @@ const SizedBox box20 = SizedBox(
 const SizedBox box30 = SizedBox(
   height: 30,
 );
-const Color primaryColor = Color(0xFF2821b5);
+const Color primaryColor = Color(0xFF0041c4);
 const Color secondaryColor = Color(0xFFf9a825);
 
 displaySnackBar(text, ctx) {
