@@ -1,13 +1,12 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fastmeds/Constants/Constants.dart';
-import 'package:fastmeds/Screens/Drawer.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:fastmeds/Widgets/Loading.dart';
 import 'package:fastmeds/models/ShopInfo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'components/doctor_card.dart';
-import 'components/search_bar.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -49,24 +48,68 @@ class _PharmacyState extends State<Pharmacy> {
     }
   }
 
+  late SearchBar searchBar;
+  _PharmacyState() {
+    searchBar = new SearchBar(
+        inBar: false,
+        setState: setState,
+        onSubmitted: print,
+        buildDefaultAppBar: buildAppBar);
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+        iconTheme: IconThemeData(color: primaryColor),
+        elevation: 0,
+        centerTitle: true,
+        title: Column(children: [
+          Text(
+            "Current Location",
+            style: TextStyle(
+                color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 11),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          GestureDetector(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.gps_fixed_rounded,
+                  size: 15,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  'Loading...',
+                  style: TextStyle(
+                      letterSpacing: 1,
+                      color: primaryColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Icons.arrow_drop_down_outlined,
+                  size: 20,
+                ),
+              ],
+            ),
+            onTap: () {},
+          )
+        ]),
+        backgroundColor: kBackgroundColor,
+        actions: [searchBar.getSearchAction(context)]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: primaryColor),
-          elevation: 0,
-          backgroundColor: kBackgroundColor,
-          actions: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(10, 10, 30, 10),
-              child: CircleAvatar(
-                  backgroundColor: Colors.grey[300],
-                  backgroundImage: NetworkImage(_auth.currentUser!.photoURL ??
-                      "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png")),
-            ),
-          ],
-        ),
-        drawer: MyDrawer(),
+        appBar: searchBar.build(context),
         backgroundColor: kBackgroundColor,
         body: mainPage());
   }
@@ -76,46 +119,12 @@ class _PharmacyState extends State<Pharmacy> {
       key: _drawerKey,
       bottom: false,
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
               height: 50,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Hi, ${_auth.currentUser!.displayName!.split(" ")[0]}",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: kTitleTextColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  box10,
-                  Text(
-                    'Find your\nmedical solution!',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 32,
-                      color: kTitleTextColor.withOpacity(0.7),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: SearchBar(),
-            ),
-            SizedBox(
-              height: 20,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
