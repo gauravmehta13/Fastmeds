@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'HomePage/components/schedule_card.dart';
 
+// ignore: must_be_immutable
 class DetailScreen extends StatelessWidget {
   var _name;
   var _description;

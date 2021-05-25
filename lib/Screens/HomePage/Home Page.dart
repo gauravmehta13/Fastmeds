@@ -5,8 +5,6 @@ import 'package:fastmeds/Widgets/Loading.dart';
 import 'package:fastmeds/models/ShopInfo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
 import 'components/doctor_card.dart';
 import 'components/search_bar.dart';
 
@@ -147,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 20,
             ),
-            buildAllPharmacy(),
+            loading ? Loading() : buildAllPharmacy(),
           ],
         ),
       ),
@@ -164,14 +162,23 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           itemCount: shopList.length,
           itemBuilder: (BuildContext context, int i) => Container(
-                child: Container(
-                  height: 150,
-                  width: 110,
-                  child: Card(
+                child: Card(
+                  child: Container(
+                    color: primaryColor.withOpacity(0.1),
+                    height: 150,
+                    width: 110,
+                    padding: EdgeInsets.all(10),
                     child: Column(
                       children: [
-                        Image.asset("assets/prescription.png"),
-                        Text(shopList[i].shopName)
+                        CircleAvatar(
+                            backgroundColor: Colors.grey[300],
+                            child: Image.asset("assets/pharmacy.png")),
+                        box5,
+                        Text(
+                          shopList[i].shopName,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        )
                       ],
                     ),
                   ),
@@ -190,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
           DoctorCard(
             'Dr. Stella Kane',
             'Heart Surgeon - Flower Hospitals',
-            'assets/images/doctor1.png',
+            'assets/pharmacy2.png',
             kBlueColor,
           ),
           SizedBox(
@@ -199,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
           DoctorCard(
             'Dr. Joseph Cart',
             'Dental Surgeon - Flower Hospitals',
-            'assets/images/doctor2.png',
+            'assets/pharmacy2.png',
             kYellowColor,
           ),
           SizedBox(
@@ -208,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
           DoctorCard(
             'Dr. Stephanie',
             'Eye Specialist - Flower Hospitals',
-            'assets/images/doctor3.png',
+            'assets/pharmacy2.png',
             kOrangeColor,
           ),
           SizedBox(
