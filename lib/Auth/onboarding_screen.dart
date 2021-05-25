@@ -1,11 +1,9 @@
 import 'package:fastmeds/Constants/Constants.dart';
-import 'package:fastmeds/Screens/OnBoarding/Mandatory%20KYC.dart';
+import 'package:fastmeds/Screens/HomePage/Home%20Page.dart';
 import 'package:fastmeds/models/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-import '../Screens/Home Page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -111,8 +109,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       );
       await _auth.signInWithCredential(credential).then((value) async {
         if (value.additionalUserInfo!.isNewUser) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MandatoryKYC()));
+          // Navigator.pushReplacement(
+          //     context, MaterialPageRoute(builder: (context) => MandatoryKYC()));
         }
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomeScreen()));

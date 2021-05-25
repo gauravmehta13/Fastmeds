@@ -1,7 +1,8 @@
 import 'package:fastmeds/Constants/Constants.dart';
-import 'package:fastmeds/components/schedule_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
+import 'HomePage/components/schedule_card.dart';
 
 class DetailScreen extends StatelessWidget {
   var _name;
