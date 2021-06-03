@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fastmeds/Constants/Constants.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:fastmeds/Widgets/Loading.dart';
-import 'package:fastmeds/models/ShopInfo.dart';
+import 'package:fastmeds/models/PharmacyInfo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'components/doctor_card.dart';
@@ -16,10 +16,11 @@ class Pharmacy extends StatefulWidget {
 }
 
 class _PharmacyState extends State<Pharmacy> {
-  CollectionReference shops = FirebaseFirestore.instance.collection('Shops');
+  CollectionReference pharmacy =
+      FirebaseFirestore.instance.collection('Pharmacy');
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
-  late List<ShopDetails> shopList = [];
+  late List<PharmacyDetails> shopList = [];
   bool loading = true;
   List colors = [kBlueColor, kYellowColor, kOrangeColor];
   Random random = new Random();
@@ -31,9 +32,9 @@ class _PharmacyState extends State<Pharmacy> {
 
   getData() async {
     try {
-      await shops.get().then((QuerySnapshot querySnapshot) {
+      await pharmacy.get().then((QuerySnapshot querySnapshot) {
         querySnapshot.docs.forEach((doc) {
-          ShopDetails tempShop = ShopDetails.fromMap(doc);
+          PharmacyDetails tempShop = PharmacyDetails.fromMap(doc);
           shopList.add(tempShop);
         });
       });
@@ -193,7 +194,7 @@ class _PharmacyState extends State<Pharmacy> {
                           child: Image.asset("assets/pharmacy.png")),
                       box5,
                       Text(
-                        shopList[i].shopName,
+                        shopList[i].pharmacyName,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontWeight: FontWeight.w600),
                       )
@@ -217,7 +218,7 @@ class _PharmacyState extends State<Pharmacy> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 5),
                     child: DoctorCard(
-                      shopList[i].shopName,
+                      shopList[i].pharmacyName,
                       shopList[i].address,
                       'assets/pharmacy2.png',
                       colors[random.nextInt(3)],
