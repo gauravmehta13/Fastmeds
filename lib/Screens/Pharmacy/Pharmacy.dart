@@ -206,6 +206,7 @@ class _PharmacyState extends State<Pharmacy> {
   }
 
   buildAllPharmacy() {
+    
     return Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 30,
